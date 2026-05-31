@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>VeloParts | Интернет-магазин велозапчастей</title>
+    <link rel="icon" href="img/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" type="text/css">
+</head>
+<body>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+    <button class="close-menu" id="closeMenuBtn">&times;</button>
+    <div class="mobile-nav">
+        <a onclick="closeMobileMenu(); showPage('catalog');"><i class="bi bi-grid-3x3-gap-fill"></i> Каталог</a>
+        <a onclick="closeMobileMenu(); showPage('cart');"><i class="bi bi-cart3"></i> Корзина <span id="mobileCartCount">0</span></a>
+        <a onclick="closeMobileMenu(); showPage('profile');"><i class="bi bi-person-circle"></i> Профиль</a>
+    </div>
+</div>
+
+<div id="modalSearch" class="modal-custom">
+    <div class="modal-content-custom">
+        <span class="modal-close" onclick="closeModal('modalSearch')">&times;</span>
+        <h3><i class="bi bi-search"></i> Поиск товаров</h3>
+        <div class="modal-search">
+            <input type="text" id="mobileSearchInput" class="search-input" placeholder="Введите название...">
+            <button class="btn-search" onclick="mobileSearchSubmit()"><i class="bi bi-search"></i> Найти</button>
+        </div>
+    </div>
+</div>
+
+<div id="modalAbout" class="modal-custom">
+    <div class="modal-content-custom">
+        <span class="modal-close" onclick="closeModal('modalAbout')">&times;</span>
+        <h3><i class="bi bi-shop"></i> О магазине</h3>
+        <p><strong>VeloParts</strong> - интернет-магазин велозапчастей и аксессуаров.</p>
+        <p>Наша миссия - сделать велоспорт доступным для каждого. Мы тщательно отбираем ассортимент и гарантируем качество каждого товара.</p>
+        <p><strong>Основные направления деятельности:</strong><br>
+        <ul><li>Розничная и мелкооптовая торговля запчастями для велосипедов</li>
+        <li>Цепи, кассеты, тормозные колодки, переключатели, рули, сёдла, покрышки, камеры, смазки, насосы</li></ul></p>
+        <button class="btn-primary-custom" onclick="closeModal('modalAbout')">Закрыть</button>
+    </div>
+</div>
+
+<div id="modalDelivery" class="modal-custom">
+    <div class="modal-content-custom">
+        <span class="modal-close" onclick="closeModal('modalDelivery')">&times;</span>
+        <h3><i class="bi bi-truck"></i> Доставка и оплата</h3>
+        <p><strong>Способы оплаты:</strong></p>
+        <ul><li>Банковской картой или наличными при получении</li><li>Безналичный расчет</li></ul>
+        <p><strong>Сроки доставки:</strong></p>
+        <ul><li>По Москве - 1-2 дня</li><li>По России - 3-7 дней</li></ul>
+        <button class="btn-primary-custom" onclick="closeModal('modalDelivery')">Закрыть</button>
+    </div>
+</div>
+
+<div id="modalPrivacy" class="modal-custom">
+    <div class="modal-content-custom">
+        <span class="modal-close" onclick="closeModal('modalPrivacy')">&times;</span>
+        <h3><i class="bi bi-shield-lock"></i> Политика конфиденциальности</h3>
+        <p>Мы уважаем ваше право на конфиденциальность. Ваши данные используются только для обработки заказов и не передаются третьим лицам.</p>
+        <p><strong>Какие данные мы собираем:</strong>
+        <ul><li>Имя, фамилия, отчество</li>
+        <li>Адрес электронной почты</li>
+        <li>Номер телефона</li>
+        <li>Адрес доставки</li>
+        <li>История заказов</li></ul></p>
+        <p><strong>Ваши права:</strong>
+        <ul><li>Вы можете запросить удаление всех своих данных (кнопка "Удалить данные" в профиле)</li>
+        <li>Вы можете редактировать свои данные в любое время</li></ul></p>
+        <button class="btn-primary-custom" onclick="closeModal('modalPrivacy')">Закрыть</button>
+    </div>
+</div>
+
+<div id="modalRequisites" class="modal-custom">
+    <div class="modal-content-custom">
+        <span class="modal-close" onclick="closeModal('modalRequisites')">&times;</span>
+        <h3><i class="bi bi-building"></i> Реквизиты</h3>
+        <p><strong>ООО "ВелоПартс"</strong></p>
+        <p>ИНН: 7701234567<br>КПП: 770101001<br>ОГРН: 1234567890123<br>р/с: 40702810123456789012<br>БИК: 044525225</p>
+        <button class="btn-primary-custom" onclick="closeModal('modalRequisites')">Закрыть</button>
+    </div>
+</div>
+
+<header class="site-header">
+    <nav class="navbar">
+        <div class="container-custom">
+            <a class="navbar-brand" onclick="showPage('catalog')"><img src="img/logo.png" alt="VeloParts"></a>
+            <div class="search-wrapper">
+                <div class="d-flex gap-2 w-100">
+                    <input type="text" id="searchInput" class="search-input flex-grow-1" placeholder="Поиск по названию...">
+                    <button class="btn-search" onclick="searchProducts()"><i class="bi bi-search"></i></button>
+                </div>
+            </div>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" onclick="showPage('catalog')"><i class="bi bi-grid-3x3-gap-fill"></i><span> Каталог</span></a></li>
+                <li class="nav-item"><a class="nav-link" onclick="showPage('cart')"><i class="bi bi-cart3"></i><span> Корзина</span> <span id="cartCount" class="cart-badge">0</span></a></li>
+                <li class="nav-item"><a class="nav-link" onclick="showPage('profile')"><i class="bi bi-person-circle"></i><span> Профиль</span></a></li>
+            </ul>
+            <button class="mobile-search-btn" id="mobileSearchBtn"><i class="bi bi-search"></i></button>
+            <button class="burger-btn" id="burgerBtn"><i class="bi bi-list"></i></button>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div id="pageCatalog" class="page-content">
+        <section class="hero-full" id="heroSection">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Всё для <span>велосипеда</span><br>в одном месте</h1>
+                    <p>Оригинальные запчасти, аксессуары и экипировка. Быстрая доставка по всей России.</p>
+                    <button class="hero-btn" onclick="showPage('catalog'); scrollToCatalog();"><i class="bi bi-arrow-right me-2"></i> Перейти в каталог</button>
+                </div>
+                <div class="hero-3d"><img src="img/3d.png" alt="3D Велосипед"></div>
+            </div>
+        </section>
+        <div class="container-custom catalog-section" id="catalogSection"><div id="catalogContent"></div></div>
+    </div>
+
+    <div id="pageCart" class="page-content" style="display: none;">
+        <div class="container-custom" style="padding-top: 100px;">
+            <h2 class="page-title"><i class="bi bi-cart3 me-2" style="color:#e67e22;"></i> Корзина</h2>
+            <div id="cartContent"></div>
+        </div>
+    </div>
+
+    <div id="pageProfile" class="page-content" style="display: none;">
+        <div class="container-custom" style="padding-top: 100px;"><div id="profileContent"></div></div>
+    </div>
+
+    <div id="pageCheckout" class="page-content" style="display: none;">
+        <div class="container-custom checkout-container" style="padding-top: 100px;">
+            <h2 class="page-title"><i class="bi bi-truck me-2" style="color:#e67e22;"></i> Оформление заказа</h2>
+            <div id="checkoutForm"></div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container-custom">
+        <div class="row">
+            <div class="col-md-4 col-sm-12 mb-4 mb-md-0 text-start">
+                <div class="footer-brand"><img src="img/logo.png" alt="VeloParts"></div>
+                <p>Интернет-магазин велозапчастей. Оригинальные запчасти, быстрая доставка, гарантия качества.</p>
+                <div class="social-links mt-3"><a href="https://vk.com/club238911289" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M21.579 6.855c.14-.465 0-.806-.662-.806h-2.193c-.558 0-.813.295-.953.62 0 0-1.115 2.719-2.695 4.482-.51.51-.742.673-1.02.673-.139 0-.34-.163-.34-.628V6.855c0-.558-.161-.806-.626-.806H9.642c-.348 0-.558.258-.558.505 0 .53.79.653.87 2.145v3.248c0 .71-.128.84-.408.84-.744 0-2.56-2.745-3.637-5.887-.21-.606-.422-.84-.98-.84H2.036c-.626 0-.75.295-.75.62 0 .58.744 3.46 3.46 7.27 1.812 2.62 4.367 4.03 6.69 4.03 1.393 0 1.565-.313 1.565-.85v-1.96c0-.625.133-.75.576-.75.326 0 .886.163 2.206 1.417 1.5 1.5 1.766 2.17 2.62 2.17h2.193c.626 0 .94-.313.76-.93-.198-.615-.91-1.506-1.853-2.563-.51-.603-1.277-1.25-1.51-1.575-.325-.39-.232-.565 0-.913 0 0 2.66-3.76 2.94-5.04z"/></svg></a></div>
+            </div>
+            <div class="col-md-4 col-sm-12 mb-4 mb-md-0 text-start">
+                <h5>Контакты</h5>
+                <ul><li><i class="bi bi-telephone-fill me-2"></i> +7 (495) 123-45-67</li>
+                <li><i class="bi bi-envelope-fill me-2"></i> shop@veloparts.ru</li>
+                <li><i class="bi bi-clock-fill me-2"></i> Пн-Вс: 10:00 - 22:00</li></ul>
+            </div>
+            <div class="col-md-4 col-sm-12 mb-4 mb-md-0 text-start">
+                <h5>Информация</h5>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-shop me-2"></i> <a class="info-link" onclick="openModal('modalAbout')">О магазине</a></li>
+                    <li><i class="bi bi-truck me-2"></i> <a class="info-link" onclick="openModal('modalDelivery')">Доставка и оплата</a></li>
+                    <li><i class="bi bi-shield-lock me-2"></i> <a class="info-link" onclick="openModal('modalPrivacy')">Политика конфиденциальности</a></li>
+                    <li><i class="bi bi-building me-2"></i> <a class="info-link" onclick="openModal('modalRequisites')">Реквизиты</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 VeloParts - интернет-магазин велозапчастей. Все права защищены.</p></div>
+    </div>
+</footer>
+
+<button id="scrollTopBtn" class="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-arrow-up"></i></button>
+
+<script src="script.js"></script>
+</body>
+</html>
